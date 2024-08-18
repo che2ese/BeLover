@@ -1,0 +1,29 @@
+Rules\wall-1-rule0-reset.tmx
+Rules\wall-1-rule1-places all tiles.tmx
+Rules\wall-1-rule2-applies variations.tmx
+
+Rules\wall-2-rule0-reset.tmx
+Rules\wall-2-rule1-places all tiles.tmx
+Rules\wall-2-rule2-applies variations.tmx
+
+Rules\wall-1and2-rule0-reset.tmx
+Rules\wall-1and2-rule1-places all tiles.tmx
+Rules\wall-1and2-rule2-applies variations.tmx
+
+Rules\hole-1-rule0-reset.tmx
+Rules\hole-1-rule1-places all tiles.tmx
+Rules\hole-1-rule2-applies variations.tmx
+
+Rules\hole-2-rule0-reset.tmx
+Rules\hole-2-rule1-places all tiles.tmx
+Rules\hole-2-rule2-applies variations.tmx
+
+Rules\hole-3-rule0-reset.tmx
+Rules\hole-3-rule1-places all tiles.tmx
+Rules\hole-3-rule2-applies variations.tmx
+
+Rules\hole-transparency-rule0-reset.tmx
+Rules\hole-transparency-rule1-places all tiles.tmx
+Rules\hole-transparency-rule2-applies variations.tmx
+
+Rules\stone fence.tmx

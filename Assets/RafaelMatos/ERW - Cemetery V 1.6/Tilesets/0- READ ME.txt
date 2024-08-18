@@ -1,0 +1,7 @@
+*Notes
+-Unity's Rule tile system alternative
+Since Unity's default rule tile system is somehow limited and does not cover some aspects of autotiling out of the box,
+tilesets with multiple heights(e.g walls with 2 or more tiles of height) have no rule tile setup. A set of premade corners are provided for these cases.
+
+-TiledMap Editor alternative
+All tilesets have full autotile support and this is as easy as selecting a brush for a specific tileset and start drawing.

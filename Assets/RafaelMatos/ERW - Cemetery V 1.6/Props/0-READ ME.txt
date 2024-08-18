@@ -1,0 +1,7 @@
+Patch 1.4---
+The abandoned structures got some pixel cleaning and other subtle adjustments. The day theme for it as a request.
+
+I used the ancient ruins as reference but, in case you don't want this version either, shifting HUE from this version 
+should be easier and will get you much closer to the day theme you're aiming for
+
+-----------

@@ -1,0 +1,14 @@
+Important Reminder
+If you change the name of a file is being referenced by some Tiled tileset(.tsx), you must open this tileset and update the reference. If you don't do that
+all the content referenced by this .tsx won't load into your Unity scene. 
+
+If you are new to Tiled + Unity and if you find some import error, I'd recommend to follow the error message. The warnings are usually pretty precise.
+You can always reach me on Discord or any other of my channels to get help.
+
+
+------------
+While almost all platforms, walls and terrains used the corner set for the auto tile, Fences uses
+the edge auto tile set because it best suits tilesets with no sides(e.g. fences). So take this
+into account while drawing because it's a bit different to draw. 
+Quick tip: the mouse position determines which tile will be shown to you(e.g. if you want to go the
+right, lead your cursor to the right)
