@@ -19,7 +19,11 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
+<<<<<<< HEAD
     FixedRegion: kr
+=======
+    FixedRegion: 
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
     Server: 
     Port: 0
     ProxyServer: 
@@ -39,6 +43,7 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+<<<<<<< HEAD
   - RPC_SelectChar
   - RPC_StartGame
   - RPC_SpawnPlayer
@@ -51,6 +56,8 @@ MonoBehaviour:
   - SetRemotePlayerSettings
   - SetPlayerAppearance
   - SetRemotePlayerAppearance
+=======
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

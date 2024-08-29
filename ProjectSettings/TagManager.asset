@@ -4,9 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Bullet
   - player1
   - player2
+=======
+  - DeathZone
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
   layers:
   - Default
   - TransparentFX
@@ -14,7 +18,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Map
   - 
   - 
   - 

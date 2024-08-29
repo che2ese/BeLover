@@ -16,6 +16,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Text StartError;
     public bool isGameStart = false;
     public bool isConnect = false;
+<<<<<<< HEAD
     public SpriteRenderer MaleSel;
     public SpriteRenderer FemaleSel;
     private bool isMaleSelected = false;
@@ -28,10 +29,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     Animator anim;
     [SerializeField]
     private RuntimeAnimatorController[] animatorControllers; // 애니메이션 컨트롤러 배열
+=======
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
 
     [SerializeField]
     private byte maxPlayers = 2;
 
+<<<<<<< HEAD
     private bool isMyCharSelected = false;
     private bool isOtherCharSelected = false;
 
@@ -57,10 +61,30 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Color femaleColor = FemaleSel.color;
         femaleColor.a = 100 / 255f;
         FemaleSel.color = femaleColor;
+=======
+    void Awake()
+    {
+        // Photon App ID 설정 및 서버 연결
+        PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "47ced4ee-73fb-42d6-b169-d52aae1d7a91";
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
+        PhotonNetwork.ConnectUsingSettings();
+
+        // 화면 해상도 및 네트워크 설정
+        Screen.SetResolution(960, 540, false);
+        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SerializationRate = 30;
+
+        // 초기 UI 설정
+        RoomPanel.SetActive(false);
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
     }
 
     public void Connect()
     {
+<<<<<<< HEAD
+=======
+        // 닉네임이 입력되지 않았다면 경고 표시
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         if (string.IsNullOrEmpty(NickNameInput.text))
         {
             Debug.LogWarning("닉네임을 입력하세요.");
@@ -69,6 +93,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             return;
         }
 
+<<<<<<< HEAD
         // 닉네임 중복 확인
         foreach (Player player in PhotonNetwork.PlayerList)
         {
@@ -81,6 +106,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
+=======
+        // 닉네임 설정 및 UI 업데이트
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
         DisconnectPanel.SetActive(false);
         RoomPanel.SetActive(true);
@@ -94,6 +122,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void GameStart()
     {
+<<<<<<< HEAD
         if (!isMyCharSelected || !isOtherCharSelected)
         {
             Debug.LogWarning("두 명의 플레이어가 모두 캐릭터를 선택해야 합니다.");
@@ -105,6 +134,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             return;
         }
 
+=======
+        // 방에 두 명의 플레이어가 모두 준비되었는지 확인
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         if (PhotonNetwork.CurrentRoom == null || PhotonNetwork.CurrentRoom.PlayerCount != PhotonNetwork.CurrentRoom.MaxPlayers)
         {
             Debug.LogWarning("2명의 플레이어가 준비가 돼야 합니다.");
@@ -115,6 +147,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             return;
         }
+<<<<<<< HEAD
 
         // 모든 클라이언트에서 GameStart 상태를 동기화하고 씬 전환 유도
         photonView.RPC("RPC_StartGame", RpcTarget.All);
@@ -162,12 +195,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
+=======
+        RoomPanel.SetActive(false);
+        isGameStart = true;
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        // 마스터 서버에 연결된 후 로비에 참가
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         Debug.Log("Connected to Master Server");
         PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
+<<<<<<< HEAD
+=======
+        // 로비에 참가한 후 방을 생성하거나 참가
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         Debug.Log("Joined lobby, now creating or joining a room...");
         RoomOptions roomOptions = new RoomOptions { MaxPlayers = maxPlayers };
         PhotonNetwork.JoinOrCreateRoom("Room", roomOptions, TypedLobby.Default);
@@ -180,25 +226,43 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+<<<<<<< HEAD
+=======
+        // 방에 성공적으로 참가한 경우
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         Debug.Log("Successfully joined the room.");
         UpdateOtherPlayerNick();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+<<<<<<< HEAD
+=======
+        // 새로운 플레이어가 방에 들어왔을 때
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         Debug.Log("Player entered: " + newPlayer.NickName);
         UpdateOtherPlayerNick();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+<<<<<<< HEAD
         Debug.Log("Player left: " + otherPlayer.NickName);
         UpdateOtherPlayerNick();
         ResetCharacterSelection();
+=======
+        // 플레이어가 방에서 나갔을 때
+        Debug.Log("Player left: " + otherPlayer.NickName);
+        UpdateOtherPlayerNick();
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
     }
 
     void Update()
     {
+<<<<<<< HEAD
+=======
+        // ESC 키를 눌렀을 때 Photon 연결 해제
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         if (Input.GetKeyDown(KeyCode.Escape) && PhotonNetwork.IsConnected)
         {
             PhotonNetwork.Disconnect();
@@ -208,12 +272,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+<<<<<<< HEAD
+=======
+        // Photon 연결이 끊어졌을 때 UI 업데이트
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         DisconnectPanel.SetActive(true);
         Debug.LogWarning($"Disconnected from Photon Server: {cause}");
     }
 
     void ClearText()
     {
+<<<<<<< HEAD
+=======
+        // 경고 메시지 초기화
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         if (NickError != null)
             NickError.text = "";
 
@@ -223,6 +295,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void UpdateOtherPlayerNick()
     {
+<<<<<<< HEAD
+=======
+        // 방에 다른 플레이어가 있다면 닉네임 업데이트
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
         if (PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount > 1)
         {
             foreach (Player player in PhotonNetwork.PlayerList)
@@ -239,6 +315,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             OtherNick.text = "Waiting for other player...";
         }
     }
+<<<<<<< HEAD
 
     public void SelectChar(string character)
     {
@@ -401,4 +478,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         SetInitialCharacterColors();
     }
+=======
+>>>>>>> d2af78701f8569556cde536fb3e01a4df1a74d41
 }
