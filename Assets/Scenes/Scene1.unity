@@ -289,7 +289,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -335,7 +335,7 @@ MonoBehaviour:
   playerTransform: {fileID: 240640065}
   cameraPosition: {x: 0, y: 0, z: 0}
   center: {x: 0, y: 3.2}
-  mapSize: {x: 10, y: 6}
+  mapSize: {x: 5.34, y: 6}
   cameraMoveSpeed: 4
 --- !u!1001 &1876937548
 PrefabInstance:

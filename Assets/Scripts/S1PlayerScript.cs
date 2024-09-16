@@ -8,15 +8,15 @@ public class S1PlayerScript : MonoBehaviour
     Animator anim;
     SpriteRenderer spriteRenderer;
 
-    // 플레이어 이동속도
+    // ???????? ????????
     public float speed;
 
     bool isFalling = false;
 
+
     float h;
     float v;
-
-    bool isHorizonMove;
+    Vector2 moveVec;
 
     void Awake()
     {
@@ -29,35 +29,18 @@ public class S1PlayerScript : MonoBehaviour
     {
         if (isFalling) return;
 
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
+        Vector2 inputVec = new Vector2(h, v);
 
-        if (hDown || vUp)
-        {
-            isHorizonMove = true;
-        }
-        else if (vDown || hUp)
-        {
-            isHorizonMove = false;
-        }
+        if (inputVec.magnitude > 1)
+            return;
 
-        // 애니메이션 설정
-        if (anim.GetInteger("hAxisRaw") != h)
-        {
-            anim.SetBool("isChange", true);
-            anim.SetInteger("hAxisRaw", (int)h);
-        }
-        else if (anim.GetInteger("vAxisRaw") != v)
-        {
-            anim.SetBool("isChange", true);
-            anim.SetInteger("vAxisRaw", (int)v);
-        }
-        else
-        {
-            anim.SetBool("isChange", false);
-        }
+        moveVec.x = inputVec.x;
+        moveVec.y = inputVec.y;
+
+        bool hButton = Input.GetButton("Horizontal");
+        bool vButton = Input.GetButton("Vertical");
 
     }
 
@@ -65,15 +48,16 @@ public class S1PlayerScript : MonoBehaviour
     {
         if (isFalling) return;
 
-        // 상하좌우 이동 
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
-
-        Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
-        rigid.velocity = moveVec * speed;
+        rigid.MovePosition(rigid.position + moveVec * Time.deltaTime * speed);
     }
 
-    // DeathZone 감지 및 원위치 이동
+    void LateUpdate()
+    {
+        anim.SetInteger("hAxisRaw", (int)moveVec.x);
+        anim.SetInteger("vAxisRaw", (int)moveVec.y);
+    }
+
+    // DeathZone ???? ?? ?????? ????
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "DeathZone" && !isFalling)
@@ -86,12 +70,12 @@ public class S1PlayerScript : MonoBehaviour
     IEnumerator FallAndRespawn()
     {
         isFalling = true;
-        rigid.velocity = Vector2.zero;  // 이동 중지
+        rigid.velocity = Vector2.zero;  // ???? ????
 
-        // 초기 설정
-        float fallDuration = 0.5f;  // 떨어지는 시간
+        // ???? ????
+        float fallDuration = 0.5f;  // ???????? ????
         float elapsedTime = 0f;
-        Vector3 initialPosition = transform.position; // 원래 위치 저장
+        Vector3 initialPosition = transform.position; // ???? ???? ????
 
         while (elapsedTime < fallDuration)
         {
@@ -103,7 +87,7 @@ public class S1PlayerScript : MonoBehaviour
             yield return null;
         }
 
-        // 원위치로 복귀
+        // ???????? ????
         transform.position = Vector2.zero;
         transform.rotation = Quaternion.identity;
 

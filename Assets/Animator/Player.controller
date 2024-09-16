@@ -334,9 +334,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: hAxisRaw
     m_EventTreshold: 1
-  - m_ConditionMode: 1
-    m_ConditionEvent: isChange
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2667039721139566725}
   m_Solo: 0
@@ -350,7 +347,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1101 &6602872391428770773
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -362,9 +359,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: vAxisRaw
     m_EventTreshold: -1
-  - m_ConditionMode: 1
-    m_ConditionEvent: isChange
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6087375670275922174}
   m_Solo: 0
@@ -378,7 +372,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1101 &6666020589213273079
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -441,9 +435,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: hAxisRaw
     m_EventTreshold: -1
-  - m_ConditionMode: 1
-    m_ConditionEvent: isChange
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8127304185580300817}
   m_Solo: 0
@@ -457,7 +448,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1101 &8340975940520576177
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -494,9 +485,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: vAxisRaw
     m_EventTreshold: 1
-  - m_ConditionMode: 1
-    m_ConditionEvent: isChange
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 645355337011773648}
   m_Solo: 0
@@ -510,4 +498,4 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
