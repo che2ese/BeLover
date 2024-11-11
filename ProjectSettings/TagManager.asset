@@ -7,6 +7,7 @@ TagManager:
   - Bullet
   - player1
   - player2
+  - DeathZone
   layers:
   - Default
   - TransparentFX
@@ -43,4 +44,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Object
+    uniqueID: 3219759021
+    locked: 0
+  - name: Main object
+    uniqueID: 3232126467
     locked: 0
