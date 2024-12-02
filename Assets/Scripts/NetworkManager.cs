@@ -44,6 +44,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateOtherPlayerNick();
     }
 
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -67,14 +68,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (!isMyCharSelected || !isOtherCharSelected)
         {
-            StartError.text = "?? ???? ?????????? ???? ???????? ???????? ??????.";
+            StartError.text = "두 명의 플레이어가 모두 캐릭터를 선택해야 합니다.";
             Invoke("ClearText", 3f);
             return;
         }
 
         if (PhotonNetwork.CurrentRoom == null || PhotonNetwork.CurrentRoom.PlayerCount != PhotonNetwork.CurrentRoom.MaxPlayers)
         {
-            StartError.text = "2???? ?????????? ?????? ???? ??????.";
+            StartError.text = "2명의 플레이어가 준비가 돼야 합니다.";
             Invoke("ClearText", 3f);
             return;
         }
@@ -124,10 +125,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Player entered: {newPlayer.NickName}");
 
-        // ?????? ???????????? ???? ???????????? ???????? ??????
+        // 새로운 플레이어에게 현재 클라이언트의 닉네임을 알려줌
         photonView.RPC("RPC_UpdateOtherPlayerNick", newPlayer, PhotonNetwork.LocalPlayer.NickName);
 
-        // ?? ?????????? ?????? ????????
+        // 새 플레이어의 닉네임 업데이트
         UpdateOtherPlayerNick();
     }
 
@@ -142,7 +143,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (isGameStart || isCharSelectionLocked)
         {
-            StartError.text = "???????? ???? ????????????.";
+            StartError.text = "캐릭터를 이미 선택했습니다.";
+
             Invoke("ClearText", 3f);
             return;
         }
@@ -211,7 +213,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (isMyCharSelected && isOtherCharSelected)
         {
-            StartError.text = "?????? ???? ????! ?????? ??????????.";
+            StartError.text = "캐릭터 선택 완료! 게임을 시작하세요.";
 
             SetCharacterColor(MaleSel, 1f);
             SetCharacterColor(FemaleSel, 1f);
