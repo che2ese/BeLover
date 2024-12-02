@@ -4,17 +4,21 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField]
     private float speed;
 
+
     float h;
     float v;
 
     bool isHorizonMove;
     bool isVerticalMove;
+
+    string playerTag;
 
     Rigidbody2D rd;
     Animator anim;
@@ -26,14 +30,33 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         rd = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
+        DontDestroyOnLoad(this.gameObject);
+
         nicknameText.text = pv.IsMine ? PhotonNetwork.NickName : pv.Owner.NickName;
         nicknameText.color = pv.IsMine ? Color.green : Color.red;
     }
 
     void Update()
     {
-        if (pv.IsMine)  // 로컬 플레이어만 입력을 받도록 처리
+        if (pv.IsMine)  // ???? ?????????? ?????? ?????? ????
         {
+            if (SceneManager.GetActiveScene().name == "Scene1")
+            {
+                // ?1? ? ???? ?? ??? ??
+                transform.position = new Vector3(10000f, 10000f, 10000f);
+
+            }
+
+            playerTag = gameObject.CompareTag("player1") ? "player1" : "player2";
+            ExitGames.Client.Photon.Hashtable playerInput = new ExitGames.Client.Photon.Hashtable
+            {
+                { "Horizontal", h },
+                { "Vertical", v },
+                { "Tag", playerTag }
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(playerInput);
+
+
             h = Input.GetAxisRaw("Horizontal");
             v = Input.GetAxisRaw("Vertical");
 
@@ -66,7 +89,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     void FixedUpdate()
     {
-        if (pv.IsMine)  // 로컬 플레이어만 이동 로직을 처리하도록 처리
+        if (pv.IsMine)  // ???? ?????????? ???? ?????? ?????????? ????
         {
             Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
             rd.velocity = moveVec * speed;

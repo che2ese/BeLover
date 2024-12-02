@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+using Photon.Pun;
 
 public class MainSceneManager : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class MainSceneManager : MonoBehaviour
 
     void Awake()
     {
+
         nm = FindObjectOfType<NetworkManager>();
     }
 

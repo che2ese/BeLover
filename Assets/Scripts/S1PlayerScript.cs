@@ -1,22 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
+using Photon.Pun;
+using ExitGames.Client.Photon;
 
-public class S1PlayerScript : MonoBehaviour
+public class S1PlayerScript : MonoBehaviourPunCallbacks
 {
-    Rigidbody2D rigid;
-    Animator anim;
-    SpriteRenderer spriteRenderer;
 
-    // ???????? ????????
     public float speed;
 
+    Animator anim;
+    SpriteRenderer spriteRenderer;
+    Rigidbody2D rigid;
+    private float horizontalInput = 0f; // 수평 입력값
+    private float verticalInput = 0f;   // 수직 입력값
     bool isFalling = false;
-
-
-    float h;
-    float v;
-    Vector2 moveVec;
 
     void Awake()
     {
@@ -27,20 +24,35 @@ public class S1PlayerScript : MonoBehaviour
 
     void Update()
     {
-        if (isFalling) return;
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
 
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
-        Vector2 inputVec = new Vector2(h, v);
+            float h = (float)player.CustomProperties["Horizontal"];
+            float v = (float)player.CustomProperties["Vertical"];
+            string tag = (string)player.CustomProperties["Tag"];
 
-        if (inputVec.magnitude > 1)
-            return;
+            // 플레이어 값 전송 확인
+            // Debug.Log($"{tag} : Input - Horizontal: {h}, Vertical: {v}");
 
-        moveVec.x = inputVec.x;
-        moveVec.y = inputVec.y;
-
-        bool hButton = Input.GetButton("Horizontal");
-        bool vButton = Input.GetButton("Vertical");
+            if (tag == "player1")
+            {
+                if (h != 0f && v == 0f)  // 수평 입력만 있을 때
+                {
+                    horizontalInput = h;
+                    verticalInput = 0f;  // 수직 입력을 0으로
+                }
+                else if (v != 0f && h == 0f)  // 수직 입력만 있을 때
+                {
+                    verticalInput = v;
+                    horizontalInput = 0f;  // 수평 입력을 0으로
+                }
+                else if (h == 0f && v == 0f)  // 아무 입력도 없을 때 (가만히 있을 때)
+                {
+                    horizontalInput = 0f;
+                    verticalInput = 0f;  // 가만히 있을 때는 입력을 0으로
+                }
+            }
+        }
 
     }
 
@@ -48,14 +60,13 @@ public class S1PlayerScript : MonoBehaviour
     {
         if (isFalling) return;
 
-        rigid.MovePosition(rigid.position + moveVec * Time.deltaTime * speed);
-    }
+        Vector2 moveVec = new Vector2(horizontalInput, verticalInput) * speed;
+        rigid.velocity = moveVec;
 
-    void LateUpdate()
-    {
         anim.SetInteger("hAxisRaw", (int)moveVec.x);
         anim.SetInteger("vAxisRaw", (int)moveVec.y);
     }
+
 
     // DeathZone ???? ?? ?????? ????
     private void OnTriggerEnter2D(Collider2D other)
@@ -67,7 +78,7 @@ public class S1PlayerScript : MonoBehaviour
 
     }
 
-    IEnumerator FallAndRespawn()
+    System.Collections.IEnumerator FallAndRespawn()
     {
         isFalling = true;
         rigid.velocity = Vector2.zero;  // ???? ????

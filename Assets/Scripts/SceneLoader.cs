@@ -18,6 +18,7 @@ public class SceneLoader : MonoBehaviourPunCallbacks
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.LoadScene("MainScene");
         }
+
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
