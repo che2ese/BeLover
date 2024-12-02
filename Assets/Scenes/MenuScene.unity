@@ -723,21 +723,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c227472ff70e3c742b4735ac8b01889b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NickNameInput: {fileID: 1126184177}
-  DisconnectPanel: {fileID: 1700394987}
   RoomPanel: {fileID: 752887752}
   MyNick: {fileID: 483607653}
   OtherNick: {fileID: 323478629}
-  NickError: {fileID: 1907491500}
   StartError: {fileID: 151479829}
-  isGameStart: 0
-  isConnect: 0
   MaleSel: {fileID: 1391707792}
   FemaleSel: {fileID: 1062336061}
+  isGameStart: 0
   animatorControllers:
   - {fileID: 9100000, guid: 0437260d89cdc1040b623ec1954d850b, type: 2}
   - {fileID: 9100000, guid: d1e3e8a5a072bf74a896d1a939a7d072, type: 2}
-  maxPlayers: 2
 --- !u!114 &558800072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2108,7 +2103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1700394988
 RectTransform:
   m_ObjectHideFlags: 0
