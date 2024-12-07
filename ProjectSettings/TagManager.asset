@@ -8,6 +8,7 @@ TagManager:
   - player1
   - player2
   - DeathZone
+  - Portal
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
+  - Portal
+  - Object
   - 
   - 
   - 
