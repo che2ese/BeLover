@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  S3sm: {fileID: 0}
   pv: {fileID: -6096268475123890931}
   nicknameText: {fileID: 5014128133371754621}
 --- !u!95 &8251382587938969043

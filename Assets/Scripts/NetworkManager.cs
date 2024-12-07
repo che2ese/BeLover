@@ -76,6 +76,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("RPC_StartScene2", RpcTarget.All);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            photonView.RPC("RPC_StartScene3", RpcTarget.All);
+        }
     }
 
     public bool GetIsGameStart()
@@ -137,6 +141,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Scene2");
 
         // NetworkManager를 수동으로 유지
+        DontDestroyOnLoad(this.gameObject);
+    }
+    public void StartScene3()
+    {
+        photonView.RPC("RPC_StartScene3", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_StartScene3()
+    {
+        PhotonNetwork.LoadLevel("Scene3-1");
         DontDestroyOnLoad(this.gameObject);
     }
     public void Spawn()
