@@ -92,6 +92,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("RPC_StartScene3", RpcTarget.All);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            photonView.RPC("RPC_StartScene4", RpcTarget.All);
+        }
     }
 
     public bool GetIsGameStart()
@@ -164,6 +168,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void RPC_StartScene3()
     {
         PhotonNetwork.LoadLevel("Scene3-1");
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    [PunRPC]
+    void RPC_StartScene4()
+    {
+        PhotonNetwork.LoadLevel("Scene4");
         DontDestroyOnLoad(this.gameObject);
     }
     public void Spawn()
