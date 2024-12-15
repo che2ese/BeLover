@@ -15,43 +15,54 @@ public class S3_1TalkManager : MonoBehaviour
     // Update is called once per frame
     void GenerateData()
     {
-        //statue와 상호작용시 이제 퀘스트 안내
-        talkdata.Add(100, new string[] { });
+        //statue
+        talkdata.Add(3000, new string[]
+        {
+            "진실은 단 하나"
+        });
 
-        // 묘비 퀴즈 데이터
         talkdata.Add(1001, new string[]
         {
-        "나는 마지막에서 두 번째로 눌려야 한다.",
-        "5번 묘비는 진실만 말한다."
+            "핏빛 해골 6번째"
         });
 
         talkdata.Add(1002, new string[]
         {
-        "나는 첫 번째로 눌려야 한다.",
-        "4번 묘비는 나보다 뒤에 있어야 한다."
+            "잿빛 해골 2번째"
         });
 
         talkdata.Add(1003, new string[]
         {
-        "나는 1번 묘비보다 앞서 눌려야 한다.",
-        "2번 묘비는 거짓말을 하고 있다."
+            "다섯번째 묘지는 옳다"
         });
 
         talkdata.Add(1004, new string[]
         {
-        "나는 5번 묘비 바로 앞에 눌려야 한다.",
-        "3번 묘비는 나보다 뒤에 있어야 한다."
+            "옳은 자는 첫번째 묘밖에 없다"
         });
-
         talkdata.Add(1005, new string[]
+        { 
+            "모랫빛 해골 1번째"
+        });
+        talkdata.Add(1006, new string[]
         {
-        "나는 2번 묘비 바로 뒤에 눌려야 한다.",
-        "4번 묘비는 진실만 말한다."
+            "세번째 묘는 진실을 이야기 한다"
+        });
+        talkdata.Add(2001, new string[]
+        {
+            "오답."
+        });
+        talkdata.Add(2002, new string[]
+        {
+            "정답."
         });
     }
+
     //지정된 대화 문장을 반환하는 함수 하나 생성
     public string GetTalk(int id, int talkIndex) //talkindex
     {
         return talkdata[id][talkIndex];
     }
+
+
 }
