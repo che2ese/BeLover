@@ -157,8 +157,8 @@ public class S1PlayerScript : MonoBehaviourPunCallbacks
                                 verticalInputPlayer1 = Mathf.Max(0f, v);
                                 break;
                             default:
-                                horizontalInputPlayer1 = 0f;
-                                verticalInputPlayer1 = v;
+                                horizontalInputPlayer1 = h;
+                                verticalInputPlayer1 = 0f;
                                 break;
                         }
                     }
