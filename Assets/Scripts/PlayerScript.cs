@@ -64,11 +64,18 @@ public class PlayerScript : MonoBehaviourPunCallbacks
             if (Msm != null && Msm.StoryPanel.activeSelf)
             {
                 if (Input.GetButtonDown("Jump"))
-                {
+                {   
                     Msm.StoryPanel.SetActive(false);
                 }
                 //  플레이어의 이동을 정지시킴
                 rd.velocity = Vector2.zero; // 움직임 정지
+                return; //  더 이상 코드 실행 중지
+            }
+            if (Msm != null && Msm.StoryPanel1.activeSelf)
+            {
+                //  플레이어의 이동을 정지시킴
+                rd.velocity = Vector2.zero; // 움직임 정지
+                anim.SetBool("isChange", false); // 애니메이션 정지
                 return; //  더 이상 코드 실행 중지
             }
             // 입력값 처리
@@ -475,7 +482,14 @@ public class PlayerScript : MonoBehaviourPunCallbacks
             {
                 Debug.LogWarning("MainSceneManager를 찾을 수 없습니다.");
             }
-            SetPosition(3f, -1f, 0f);
+            if (playerTag == "player1")
+            {
+                SetPosition(3.5f, -1f, 0f);
+            }
+            else if (playerTag == "player2")
+            {
+                SetPosition(2.8f, -1f, 0f);
+            }
         }
         else if (scene.name == "Scene3-1")
         {

@@ -16,13 +16,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public Button loginButton;
     public Button createRoomButton;
-    public Button joinRoomButton; // **JoinRoom ?? ??**
+    public Button joinRoomButton; // **JoinRoom 버튼 추가**
 
     Dictionary<string, GameObject> rooms = new Dictionary<string, GameObject>();
     GameObject roomItemPrefab;
     public Transform scrollContent;
 
-    private bool isLoggedIn = false; // **??? ?? ?? ?? ??**
+    private bool isLoggedIn = false; // **로그인 상태 확인 변수 추가**
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected to Master");
 
-        // **??? ??? ?? ? ??? ??**
+        // **마스터 서버에 연결 후 닉네임 설정**
         SetUserId();
         PhotonNetwork.NickName = userId;
 
@@ -71,7 +71,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         foreach (var player in PhotonNetwork.CurrentRoom.Players)
         {
-            Debug.Log($"???? ???: {player.Value.NickName}, ?? ???: {player.Value.ActorNumber}");
+            Debug.Log($"플레이어 닉네임: {player.Value.NickName}, 유저 고유값: {player.Value.ActorNumber}");
         }
 
         if (PhotonNetwork.IsMasterClient)
@@ -85,7 +85,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         userId = PlayerPrefs.GetString("USER_ID", $"USER_{Random.Range(1, 21):00}");
         userInputField.text = userId;
 
-        DisableAllButtons(); // **?? ?? ????**
+        DisableAllButtons(); // **모든 버튼 비활성화**
     }
 
     public void SetUserId()
@@ -102,7 +102,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("USER_ID", userId);
         if (PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.NickName = userId; // **??? ??**
+            PhotonNetwork.NickName = userId; // **닉네임 설정**
         }
     }
 
@@ -110,7 +110,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (string.IsNullOrEmpty(roomInputField.text))
         {
-            roomInputField.text = $"{Random.Range(1, 101):000}? ?";
+            roomInputField.text = $"{Random.Range(1, 101):000}번 방";
         }
         return roomInputField.text;
     }
@@ -181,7 +181,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (!isLoggedIn)
         {
-            Debug.LogWarning("??? ?? ?? ??? ? ????.");
+            Debug.LogWarning("로그인 후에 방에 입장할 수 있습니다.");
             return;
         }
 
@@ -192,7 +192,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (!isLoggedIn)
         {
-            Debug.LogWarning("??? ?? ?? ??? ? ????.");
+            Debug.LogWarning("로그인 후에 방을 생성할 수 있습니다.");
             return;
         }
 

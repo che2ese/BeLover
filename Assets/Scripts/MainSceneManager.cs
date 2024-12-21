@@ -3,6 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MainSceneManager : MonoBehaviour
 {
@@ -15,6 +16,18 @@ public class MainSceneManager : MonoBehaviour
     public Image CinemaImage2;
 
     public GameObject StoryPanel;
+    public GameObject StoryPanel1;
+    public GameObject StoryPanel2;
+    public GameObject StoryPanel3;
+
+    public GameObject S1P1Panel; // Panel1의 대화UI
+    public GameObject S1P2Panel;
+    public GameObject S1BossPanel;
+    public TypeEffect P1Talk;
+    public TypeEffect P2Talk;
+    public TypeEffect BossTalk;
+    private AudioSource bossAudioSource; // AudioSource 변수 추가
+
     public TextMeshProUGUI StoryText;
     public TypeEffect CinemaText;
 
@@ -39,6 +52,7 @@ public class MainSceneManager : MonoBehaviour
     }
     private void Start()
     {
+        bossAudioSource = S1BossPanel.GetComponent<AudioSource>(); // AudioSource 할당
         // 씬이 시작되면 시네마틱 애니메이션 시작
         StartCoroutine(CinemaSequence());
     }
@@ -295,4 +309,83 @@ public class MainSceneManager : MonoBehaviour
         finalColor.b = 0f;
         text.color = finalColor;
     }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded; // 씬이 로드될 때 OnSceneLoaded 연결
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; // 연결 해제
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainScene")
+        {
+            if(GameManager.Instance.mainSceneEnterCount == 2)
+            {
+                StoryPanel1.SetActive(true);
+                StartCoroutine(ShowS1Dialogue());
+            }
+            else if (GameManager.Instance.mainSceneEnterCount == 3)
+            {
+                StoryPanel2.SetActive(true);
+            }
+            else if (GameManager.Instance.mainSceneEnterCount == 4)
+            {
+                StoryPanel3.SetActive(true);
+            }
+        }
+    }
+    IEnumerator ShowS1Dialogue()
+    {
+        yield return new WaitForSeconds(3f);
+        S1P1Panel.SetActive(true);
+        P1Talk.SetMsg("드디어 보인다... 여긴 어디지?");
+        yield return new WaitForSeconds(5f);
+
+        S1P1Panel.SetActive(false);
+        S1P2Panel.SetActive(true);
+        P2Talk.SetMsg("도대체 여기가 어딜까요?");
+        yield return new WaitForSeconds(5f);
+
+        S1P2Panel.SetActive(false);
+        StartCoroutine(BlinkStoryPanel1());
+        yield return new WaitForSeconds(5f);
+        S1BossPanel.SetActive(true);
+        bossAudioSource.Play();
+
+        BossTalk.SetMsg("너희는 지금 이승에 한이 맺혀 지박령이 된 유령들의 묘지에 침입했다.\n\n그 벌로 각각의 묘지에 해당하는 귀신들을 성불해야한다.");
+        yield return new WaitForSeconds(15f);
+
+        BossTalk.SetMsg("거울의 방 - 분리의 방 - 어둠의 방 순서대로 해야하며\n\n각각의 귀신들을 성불하여 얻게 되는 아이템들이 있다.");
+        yield return new WaitForSeconds(12f);
+
+        BossTalk.SetMsg("그 아이템들은 마지막 탈출에 도움이 될 것이다.\n\n그럼 이제부터 행운을 빈다.");
+        yield return new WaitForSeconds(10f);
+
+
+        S1BossPanel.SetActive(false);
+        bossAudioSource.Stop();
+        StoryPanel1.SetActive(false);
+    }
+    IEnumerator BlinkStoryPanel1()
+    {
+        Image storyPanelImage = StoryPanel1.GetComponent<Image>();
+        if (storyPanelImage == null) yield break;
+
+        for (int i = 0; i < 5; i++)
+        {
+            storyPanelImage.color = new Color(storyPanelImage.color.r, storyPanelImage.color.g, storyPanelImage.color.b, 0f);
+            yield return new WaitForSeconds(0.5f);
+            storyPanelImage.color = new Color(storyPanelImage.color.r, storyPanelImage.color.g, storyPanelImage.color.b, 0.784f);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        Color finalColor = storyPanelImage.color;
+        finalColor.a = 0.784f;
+        storyPanelImage.color = finalColor;
+    }
+
 }
