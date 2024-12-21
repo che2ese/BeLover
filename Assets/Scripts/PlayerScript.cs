@@ -6,13 +6,19 @@ using Photon.Realtime;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerScript : MonoBehaviourPunCallbacks
 {
     public MainSceneManager Msm;
 
     [SerializeField]
     private float speed;
     public S3SceneManager S3sm; //s3
+
+    [SerializeField] private int minSortingOrder = 10; // Y 값이 -500일 때의 최소 레이어
+    [SerializeField] private int maxSortingOrder = 1000000; // Y 값이 500일 때의 최대 레이어
+    [SerializeField] private float offsetMultiplier = 5f;
+    private float minY = -500f; // Y 좌표 최소값
+    private float maxY = 500f;  // Y 좌표 최대값
 
     float h;
     float v;
@@ -24,8 +30,12 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     Rigidbody2D rd;
     Animator anim;
+    SpriteRenderer spriteRenderer;
     public PhotonView pv;
     public Text nicknameText;
+
+    private float horizontalInput = 0f;
+    private float verticalInput = 0f;
 
     //s3 raycast
     Vector3 dirVec;//바라보고 있는 방향
@@ -33,11 +43,13 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     GameObject portalObject;
     private GameObject currentRoad; // Player2의 현재 Road 상태
 
+
     void Awake()
     {
         rd = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         S3sm = FindObjectOfType<S3SceneManager>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         DontDestroyOnLoad(this.gameObject);
 
@@ -57,7 +69,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 }
                 //  플레이어의 이동을 정지시킴
                 rd.velocity = Vector2.zero; // 움직임 정지
-                anim.SetBool("isChange", false); // 애니메이션 정지
                 return; //  더 이상 코드 실행 중지
             }
             // 입력값 처리
@@ -68,6 +79,23 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             bool vDown = Input.GetButtonDown("Vertical");
             bool hUp =  Input.GetButtonUp("Horizontal");
             bool vUp =  Input.GetButtonUp("Vertical");
+
+            if (h != 0f && v == 0f)
+            {
+                horizontalInput = h;
+                verticalInput = 0f;
+            }
+            else if (v != 0f && h == 0f)
+            {
+                verticalInput = v;
+                horizontalInput = 0f;
+            }
+            else if (h == 0f && v == 0f)
+            {
+                horizontalInput = 0f;
+                verticalInput = 0f;
+            }
+
 
             // 태그 설정
             playerTag = gameObject.CompareTag("player1") ? "player1" : "player2";
@@ -137,31 +165,75 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                     }
                 }
             }
-
-            if (hDown)
-                isHorizonMove = true;
-            else if (vDown)
-                isHorizonMove = false;
-            else if (vUp || hUp)
-                isHorizonMove = h != 0;
-
-            // 애니메이션 상태 처리
-            if (anim.GetInteger("hAxisRaw") != h)
-            {
-                anim.SetBool("isChange", true);
-                anim.SetInteger("hAxisRaw", (int)h);
-            }
-            else if (anim.GetInteger("vAxisRaw") != v)
-            {
-                anim.SetBool("isChange", true);
-                anim.SetInteger("vAxisRaw", (int)v);
-            }
-            else
-                anim.SetBool("isChange", false);
-
-
         }
     }
+
+    void LateUpdate()
+    {
+
+        if (SceneManager.GetActiveScene().name == "MainScene")
+        {
+            // Y 좌표를 sortingOrder 범위로 매핑
+            float normalizedY = Mathf.InverseLerp(minY, maxY, transform.position.y);
+            float lerpedOrder = Mathf.Lerp(maxSortingOrder, minSortingOrder, normalizedY) * offsetMultiplier;
+            int calculatedOrder = Mathf.RoundToInt(lerpedOrder);
+
+            // 정수로 변환하여 설정
+            spriteRenderer.sortingOrder = Mathf.RoundToInt(calculatedOrder);
+        }
+        else
+        {
+            spriteRenderer.sortingOrder = 10;
+        }
+    }
+
+
+    void FixedUpdate()
+    {
+        if (pv.IsMine)
+        {
+            Vector2 moveVec = new Vector2(horizontalInput, verticalInput);
+            rd.velocity = moveVec * speed;
+
+            anim.SetInteger("hAxisRaw", (int)moveVec.x);
+            anim.SetInteger("vAxisRaw", (int)moveVec.y);
+
+            pv.RPC("SyncAnimation", RpcTarget.Others, (int)horizontalInput, (int)verticalInput);
+
+            // Ray 시작 위치를 더 오른쪽으로 이동
+            Vector2 rayStartPos = rd.position + new Vector2(0.2f, -0.3f);
+
+            // 디버그 선 추가
+            Debug.DrawRay(rayStartPos, dirVec * 0.5f, Color.red);
+
+            // Ray를 발사
+            RaycastHit2D rayHit = Physics2D.Raycast(
+                rayStartPos, // 시작 위치
+                dirVec,      // 방향
+                1f,          // 길이 (0.35f -> 1f로 변경)
+                LayerMask.GetMask("Object") // Object 레이어만 탐색
+            );
+
+            if (rayHit.collider != null)
+            {
+                Debug.Log("Ray Hit Object: " + rayHit.collider.gameObject.name);
+                Debug.Log("Ray Hit Object: " + rayHit.collider.gameObject.tag);
+                scanObject = rayHit.collider.gameObject;
+            }
+            else
+            {
+                scanObject = null;
+            }
+        }
+    }
+
+    [PunRPC]
+    void SyncAnimation(int hInput, int vInput)
+    {
+        anim.SetInteger("hAxisRaw", hInput);
+        anim.SetInteger("vAxisRaw", vInput);
+    }
+
     void HandleMissionSelection(string missionName, NetworkManager nm)
     {
         // UI 패널에 메시지 표시
@@ -291,43 +363,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             Debug.LogWarning("두 플레이어의 선택이 일치하지 않았습니다.");
         }
     }
-    
-    void FixedUpdate()
-    {
-        if (pv.IsMine)
-        {
-            Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
-            rd.velocity = moveVec * speed;
-            // Ray 시작 위치를 더 오른쪽으로 이동
-            Vector2 rayStartPos = rd.position + new Vector2(0.2f, -0.3f);
 
-            // 디버그 선 추가
-            Debug.DrawRay(rayStartPos, dirVec * 0.5f, Color.red);
-
-            // Ray를 발사
-            RaycastHit2D rayHit = Physics2D.Raycast(
-                rayStartPos, // 시작 위치
-                dirVec,      // 방향
-                1f,          // 길이 (0.35f -> 1f로 변경)
-                LayerMask.GetMask("Object") // Object 레이어만 탐색
-            );
-
-            if (rayHit.collider != null)
-            {
-                Debug.Log("Ray Hit Object: " + rayHit.collider.gameObject.name);
-                Debug.Log("Ray Hit Object: " + rayHit.collider.gameObject.tag);
-                scanObject = rayHit.collider.gameObject;
-            }
-            else
-            {
-                scanObject = null;
-            }
-        }
-    }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        // Photon 상태 동기화용 (필요 시 구현)
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Portal"))

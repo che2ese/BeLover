@@ -10,12 +10,19 @@ public class Btn : MonoBehaviour
     public Color pressedColor = new Color(0.5f, 0.5f, 0.5f);
     public Color incorrectColor = new Color(0.6f, 0.2f, 0.2f);
 
+    private GameObject childObject;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
             originalColor = spriteRenderer.color; // 원래 색 저장
+        }
+
+        if (transform.childCount > 0)
+        {
+            childObject = transform.GetChild(0).gameObject;
         }
     }
 
@@ -30,10 +37,12 @@ public class Btn : MonoBehaviour
             if (ans == 1)
             {
                 spriteRenderer.color = pressedColor;
+                childObject.SetActive(false);
             }
             else if (ans == 0)
             {
                 spriteRenderer.color = incorrectColor;
+                childObject.SetActive(false);
             }
         }
     }
@@ -41,5 +50,6 @@ public class Btn : MonoBehaviour
     public void ResetButton()
     {
         spriteRenderer.color = originalColor; // 원래 색으로 복원
+        childObject.SetActive(true);
     }
 }

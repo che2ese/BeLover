@@ -63,9 +63,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: hAxisRaw
     m_EventTreshold: -1
-  - m_ConditionMode: 1
-    m_ConditionEvent: isChange
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6439100391628343812}
   m_Solo: 0
@@ -79,7 +76,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1102 &-7374874700670733807
 AnimatorState:
   serializedVersion: 6
@@ -197,9 +194,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: vAxisRaw
     m_EventTreshold: -1
-  - m_ConditionMode: 1
-    m_ConditionEvent: isChange
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7284336575139459272}
   m_Solo: 0
@@ -213,7 +207,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -228,19 +222,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: vAxisRaw
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isChange
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -340,9 +334,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: hAxisRaw
     m_EventTreshold: 1
-  - m_ConditionMode: 1
-    m_ConditionEvent: isChange
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7374874700670733807}
   m_Solo: 0
@@ -356,7 +347,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1102 &6913640906455147532
 AnimatorState:
   serializedVersion: 6
@@ -421,9 +412,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: vAxisRaw
     m_EventTreshold: 1
-  - m_ConditionMode: 1
-    m_ConditionEvent: isChange
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7999645878063555944}
   m_Solo: 0
@@ -437,7 +425,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1107 &7790719535834798493
 AnimatorStateMachine:
   serializedVersion: 6

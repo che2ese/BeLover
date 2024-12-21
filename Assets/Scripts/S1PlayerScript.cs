@@ -41,6 +41,19 @@ public class S1PlayerScript : MonoBehaviourPunCallbacks
     {
         if (SceneManager.GetActiveScene().name == "Scene1")
         {
+
+            // ======================= 마지막에 지울 것 ! =======================
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                GameManager.Instance.isMission1Clear = true;
+                Debug.Log("Mission1 Clear");
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.LoadLevel("MainScene");
+                }
+            }
+            // ==============================================================
+
             // **자신의 CustomProperties 확인**
             if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Tag"))
             {

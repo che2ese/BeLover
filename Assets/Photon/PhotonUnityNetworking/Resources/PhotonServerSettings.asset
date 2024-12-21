@@ -69,6 +69,7 @@ MonoBehaviour:
   - ShowClearUI_RPC
   - OpenDoor
   - MoveLightBezier
+  - SyncAnimation
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
