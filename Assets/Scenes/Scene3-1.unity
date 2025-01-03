@@ -74858,6 +74858,12 @@ MonoBehaviour:
   bossTalk: {fileID: 1034683228}
   ghostImage: {fileID: 603475530}
   Buddhahood: {fileID: 585687541}
+  Tomb1: {fileID: 1831979676}
+  Tomb2: {fileID: 1083785363}
+  Tomb3: {fileID: 722795196}
+  Tomb4: {fileID: 1247614262}
+  Tomb5: {fileID: 241222797}
+  Tomb6: {fileID: 597913351}
 --- !u!114 &1668927374
 MonoBehaviour:
   m_ObjectHideFlags: 0

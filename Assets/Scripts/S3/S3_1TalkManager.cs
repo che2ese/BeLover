@@ -20,33 +20,33 @@ public class S3_1TalkManager : MonoBehaviour
         {
             "진실은 단 하나"
         });
-
+        
         talkdata.Add(1001, new string[]
         {
-            "핏빛 해골 6번째"
+            ""
         });
 
         talkdata.Add(1002, new string[]
         {
-            "잿빛 해골 2번째"
+            ""
         });
 
         talkdata.Add(1003, new string[]
         {
-            "다섯번째 묘지는 옳다"
+            ""
         });
 
         talkdata.Add(1004, new string[]
         {
-            "옳은 자는 첫번째 묘밖에 없다"
+            ""
         });
         talkdata.Add(1005, new string[]
         {
-            "모랫빛 해골 1번째"
+            ""
         });
         talkdata.Add(1006, new string[]
         {
-            "세번째 묘는 진실을 이야기 한다"
+            ""
         });
         talkdata.Add(2001, new string[]
         {

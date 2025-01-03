@@ -56,6 +56,13 @@ public class S3SceneManager : MonoBehaviourPunCallbacks
     public Image ghostImage;
     public Image Buddhahood;
 
+    public GameObject Tomb1;
+    public GameObject Tomb2;
+    public GameObject Tomb3;
+    public GameObject Tomb4;
+    public GameObject Tomb5;
+    public GameObject Tomb6;
+
     private void Awake()
     {
         tm = FindObjectOfType<TalkManager>();
@@ -273,7 +280,12 @@ public class S3SceneManager : MonoBehaviourPunCallbacks
         string talkData = talkManager.GetTalk(id, talkIndex);
         if (isTomb)
         {
-            talkText.text = talkData;
+            if (scanObject == Tomb1) { talkText.text = "핏빛 해골 6번째"; }
+            if (scanObject == Tomb2) { talkText.text = "잿빛 해골 2번째"; }
+            if (scanObject == Tomb3) { talkText.text = "다섯번째 묘지는 옳다"; }
+            if (scanObject == Tomb4) { talkText.text = "옳은 자는 첫번째 묘밖에 없다"; }
+            if (scanObject == Tomb5) { talkText.text = "모랫빛 해골 1번째"; }
+            if (scanObject == Tomb6) { talkText.text = "세번째 묘는 진실을 이야기 한다"; }
         }
         else if (skullTrue)
         {
